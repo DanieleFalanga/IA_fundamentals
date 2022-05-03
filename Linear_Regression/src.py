@@ -3,17 +3,17 @@ import numpy as np
 
 ALPHA = 0.01
 
+#funzione per trovare w* ottimo, È SOLO DI PROVA
 def normal_equations(matrix, target):
     trans = np.transpose(matrix)
     w = np.dot((np.dot((np.linalg.inv(np.dot(trans, matrix))), trans)), target)
     return w
 
-def stocastich_gradient_descendendt(w, y, set):
-    for i in range(0,len(set)):
-        for j in range(0,len(set[i])):    
-            w[j] -= ALPHA*(np.dot(w, set[i]) - y[i])*set[i][j]
+def stocastich_gradient_descendendt(w, y, x):
+    for i in range(0,len(x)):
+        for j in range(0,len(x[i])):    
+            w[j] -= ALPHA*(np.dot(w, x[i]) - y[i])*x[i][j]
     return  
-
 
 def main():
     data = load_iris()
