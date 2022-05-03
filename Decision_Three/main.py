@@ -35,7 +35,6 @@ def remainder(examples, attribute):
           ret += ((pk+nk)/len(examples)) * entropy(pk / (pk+nk))
     return ret 
         
-
 def entropy(q):
     ret = -(q*log2(q) + (1-q)*log2(1-q))
     if not ret:
@@ -154,5 +153,3 @@ def main():
 
 
 
-if __name__ == '__main__':
-    main()
