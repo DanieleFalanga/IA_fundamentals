@@ -1,7 +1,9 @@
 from sklearn.datasets import load_iris
 import numpy as np
 
-ALPHA = 0.0001
+ALPHA = 0.01
+CONVERGENCE = 0.00000000001
+
 
 #funzione per trovare w* ottimo, È SOLO DI PROVA
 def normal_equations(matrix, target):
@@ -9,13 +11,41 @@ def normal_equations(matrix, target):
     w = np.dot((np.dot((np.linalg.inv(np.dot(trans, matrix))), trans)), target)
     return w
 
-def stocastich_gradient_descendendt(w, y, x):
-    old_w = w
-    for i in range(0,len(x)):
-        for j in range(0,len(x[i])):    
-            w[j] -= ALPHA*(np.dot(old_w, x[i]) - y[i])*x[i][j]
-    w = old_w
-    return  
+def hypotesis(w,x):
+    w = np.transpose(w)
+    h = np.dot(x,w)
+    return h 
+
+def loss(y_i, hyp_i):
+    return (y_i-hyp_i)
+
+def stochastich_gradient_descendent(w,y,x):
+    converge = False
+    #scansiono colonne di x
+    while(converge == False):
+        hyp = hypotesis(w,x)
+        for j in range(0,len(x[0])):
+            # scansiono le righe di x
+            for i in range(0,len(x)-100):
+                #print(i,j)
+                if (loss(y[i],hyp[i]) > 0 and loss(y[i],hyp[i]) < CONVERGENCE):
+                    print("Sono nell' if")
+                    converge = True
+                    continue
+                print("Aggiorno w[j]")
+                w[j] += ALPHA*(loss(y[i],hyp[i]))*x[i][j]
+                converge = False
+        
+    return 
+        
+
+#def stocastich_gradient_descendendt(w, y, x):
+#    old_w = w
+#    for i in range(0,len(x)):
+#        for j in range(0,len(x[i])):    
+#            w[j] -= ALPHA*(np.dot(old_w, x[i]) - y[i])*x[i][j]
+#    w = old_w
+#    return 
 
 def main():
     data = load_iris()
@@ -44,11 +74,13 @@ def main():
     #calcolo il vettore w ottimo 
     w_star = normal_equations(matrix, target)
     #prendo una w qualsiasi
-    w = [0,0,0,0,0]
+    w = [1,1,1,1,1]
     
-    stocastich_gradient_descendendt(w,target, matrix)
+    stochastich_gradient_descendent(w,target, matrix)
     print(w_star)
     print(w)
-
+    
+    # h = hypotesis(w, matrix)
+    # print(h)
 if __name__ == '__main__':
     main()
