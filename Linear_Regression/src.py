@@ -28,7 +28,7 @@ def stochastich_gradient_descendent(w,y,x):
             # scansiono le righe di x
             for i in range(0,len(x)-100):
                 #print(i,j)
-                if (loss(y[i],hyp[i]) > 0 and loss(y[i],hyp[i]) < CONVERGENCE):
+                if (abs(loss(y[i],hyp[i])) <= CONVERGENCE):
                     print("Sono nell' if")
                     converge = True
                     continue
@@ -39,13 +39,6 @@ def stochastich_gradient_descendent(w,y,x):
     return 
         
 
-#def stocastich_gradient_descendendt(w, y, x):
-#    old_w = w
-#    for i in range(0,len(x)):
-#        for j in range(0,len(x[i])):    
-#            w[j] -= ALPHA*(np.dot(old_w, x[i]) - y[i])*x[i][j]
-#    w = old_w
-#    return 
 
 def main():
     data = load_iris()
@@ -76,11 +69,10 @@ def main():
     #prendo una w qualsiasi
     w = [1,1,1,1,1]
     
-    stochastich_gradient_descendent(w,target, matrix)
+    # stochastich_gradient_descendent(w,target, matrix)
     print(w_star)
     print(w)
-    
-    # h = hypotesis(w, matrix)
-    # print(h)
+    #print(matrix)
+
 if __name__ == '__main__':
     main()
