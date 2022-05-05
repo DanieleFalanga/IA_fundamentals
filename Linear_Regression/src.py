@@ -1,8 +1,8 @@
 from sklearn.datasets import load_iris
 import numpy as np
 
-ALPHA = 0.01
-CONVERGENCE = 0.00000000001
+ALPHA = 0.0001  
+CONVERGENCE = 0.001
 
 
 #funzione per trovare w* ottimo, È SOLO DI PROVA
@@ -16,37 +16,30 @@ def hypotesis(w,x):
     h = np.dot(x,w)
     return h 
 
-def loss(y_i, hyp_i):
+def bias(y_i, hyp_i):
     return (y_i-hyp_i)
 
+def mean_squared_error(y_true, y_predicted):     
+    # Calculating the loss or cost
+    cost = np.sum((y_true-y_predicted)**2) / len(y_true)
+    return cost
+
 def stochastich_gradient_descendent(w,y,x):
-    converge = False
     #scansiono colonne di x
-    while(converge == False):
+    previus_cost = None
+    while(True):
         hyp = hypotesis(w,x)
+        current_cost = mean_squared_error(y,hyp)
+        if previus_cost and abs(previus_cost-current_cost) <= CONVERGENCE:
+            break
+        previus_cost = current_cost
         for j in range(0,len(x[0])):
             # scansiono le righe di x
-            for i in range(0,len(x)-100):
-                #print(i,j)
-                if (loss(y[i],hyp[i]) > 0 and loss(y[i],hyp[i]) < CONVERGENCE):
-                    print("Sono nell' if")
-                    converge = True
-                    continue
-                print("Aggiorno w[j]")
-                w[j] += ALPHA*(loss(y[i],hyp[i]))*x[i][j]
-                converge = False
+            for i in range(0,len(x)):
+                w[j] += ALPHA*(bias(y[i],hyp[i]))*x[i][j]
         
     return 
         
-
-#def stocastich_gradient_descendendt(w, y, x):
-#    old_w = w
-#    for i in range(0,len(x)):
-#        for j in range(0,len(x[i])):    
-#            w[j] -= ALPHA*(np.dot(old_w, x[i]) - y[i])*x[i][j]
-#    w = old_w
-#    return 
-
 def main():
     data = load_iris()
     #data di iris Type Object: Pandas.Matrix
@@ -81,6 +74,7 @@ def main():
     print(w)
     
     # h = hypotesis(w, matrix)
-    # print(h)
+    # cost = mean_squared_error(target, h)
+    # print(cost)
 if __name__ == '__main__':
     main()
