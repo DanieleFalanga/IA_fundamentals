@@ -1,5 +1,6 @@
 from sklearn.datasets import load_iris
 import numpy as np
+from sklearn.metrics import mean_absolute_error
 
 ALPHA = 0.0001  
 CONVERGENCE = 0.001
@@ -30,7 +31,7 @@ def stochastich_gradient_descendent(w,y,x):
     while(True):
         hyp = hypotesis(w,x)
         current_cost = mean_squared_error(y,hyp)
-        if previus_cost and abs(previus_cost-current_cost) <= CONVERGENCE:
+        if previus_cost and current_cost > previus_cost:
             break
         previus_cost = current_cost
         for j in range(0,len(x[0])):
@@ -58,8 +59,8 @@ def main():
     matrix = np.insert(matrix, 0, new_column, axis=1)
 
     #ricavo training set e test set
-    training_set = matrix[0:50, 0:4]
-    y_trainingset = target[0:50]
+    training_set = matrix[50:70, 0:5]
+    y_trainingset = target[50:70]
     test_set = matrix[51:150, 0:4]
     y_testset = target[51:150]
     
@@ -67,9 +68,9 @@ def main():
     #calcolo il vettore w ottimo 
     w_star = normal_equations(matrix, target)
     #prendo una w qualsiasi
-    w = [1,1,1,1,1]
+    w = [0,0,0,0,0]
     
-    # stochastich_gradient_descendent(w,target, matrix)
+    stochastich_gradient_descendent(w,target, matrix)
     print(w_star)
     print(w)
     
