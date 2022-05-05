@@ -30,7 +30,8 @@ def stochastich_gradient_descendent(w,y,x):
     previus_cost = None
     while(True):
         hyp = hypotesis(w,x)
-        current_cost = mean_squared_error(y,hyp)
+        current_cost = round(mean_squared_error(y,hyp),4)
+        print(current_cost)
         if previus_cost and current_cost > previus_cost:
             print("Loss Totale: ", previus_cost)
             break
