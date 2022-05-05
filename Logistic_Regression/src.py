@@ -15,7 +15,7 @@ def Logistic_Regression(w,y,x):
     while(True):
         exp = exponent(x,w)
         hyp = theta(exp)
-        current_cost = round(binary_cross_entropy(y,hyp),4)
+        current_cost = round(binary_cross_entropy(y,hyp),5)
         print(current_cost)
         if previus_cost and current_cost > previus_cost:
             print("Loss Totale: ", previus_cost)
@@ -24,7 +24,7 @@ def Logistic_Regression(w,y,x):
         for j in range(0,len(x[0])):
             # scansiono le righe di x
             for i in range(0,len(x)):
-                w[j] += round(ALPHA*(y[i]-hyp[i])*x[i][j],4)
+                w[j] += ALPHA*(y[i]-hyp[i])*x[i][j]
         
     return 
 
