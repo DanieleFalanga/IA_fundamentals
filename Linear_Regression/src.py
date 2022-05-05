@@ -32,6 +32,7 @@ def stochastich_gradient_descendent(w,y,x):
         hyp = hypotesis(w,x)
         current_cost = mean_squared_error(y,hyp)
         if previus_cost and current_cost > previus_cost:
+            print("Loss Totale: ", previus_cost)
             break
         previus_cost = current_cost
         for j in range(0,len(x[0])):
@@ -57,25 +58,15 @@ def main():
     for i in range(0,150):
         new_column.append(1)
     matrix = np.insert(matrix, 0, new_column, axis=1)
-
-    #ricavo training set e test set
-    training_set = matrix[50:70, 0:5]
-    y_trainingset = target[50:70]
-    test_set = matrix[51:150, 0:4]
-    y_testset = target[51:150]
-    
-    
+ 
     #calcolo il vettore w ottimo 
     w_star = normal_equations(matrix, target)
     #prendo una w qualsiasi
-    w = [0,0,0,0,0]
+    w = [3,2,4,6,1]
     
     stochastich_gradient_descendent(w,target, matrix)
     print(w_star)
     print(w)
-    
-    # h = hypotesis(w, matrix)
-    # cost = mean_squared_error(target, h)
-    # print(cost)
+
 if __name__ == '__main__':
     main()
