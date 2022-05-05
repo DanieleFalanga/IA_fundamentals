@@ -69,7 +69,7 @@ def main():
     #prendo una w qualsiasi
     w = [1,1,1,1,1]
     
-    stochastich_gradient_descendent(w,target, matrix)
+    # stochastich_gradient_descendent(w,target, matrix)
     print(w_star)
     print(w)
     
