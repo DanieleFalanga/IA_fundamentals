@@ -3,7 +3,6 @@ import numpy as np
 from sklearn.metrics import mean_absolute_error
 
 ALPHA = 0.0001  
-CONVERGENCE = 0.001
 
 
 #funzione per trovare w* ottimo, È SOLO DI PROVA
@@ -31,9 +30,8 @@ def stochastich_gradient_descendent(w,y,x):
     while(True):
         hyp = hypotesis(w,x)
         current_cost = mean_squared_error(y,hyp)
-        print(current_cost)
+        #print(current_cost)
         if previus_cost and current_cost > previus_cost:
-            print("Loss Totale: ", previus_cost)
             break
         previus_cost = current_cost
         for j in range(0,len(x[0])):
@@ -41,7 +39,7 @@ def stochastich_gradient_descendent(w,y,x):
             for i in range(0,len(x)):
                 w[j] += ALPHA*(bias(y[i],hyp[i]))*x[i][j]
         
-    return 
+    return previus_cost
         
 def main():
     data = load_iris()
@@ -65,9 +63,18 @@ def main():
     #prendo una w qualsiasi
     w = [3,2,4,6,1]
     
-    stochastich_gradient_descendent(w,target, matrix)
-    print(w_star)
-    print(w)
+
+    print("#################LINEAR REGRESSION#################")
+    print("Esecuzione molto lenta, per vedere l'esecuzione, decommentare la print del costo nella funzione stochastich_gradient_descendent")
+    print("")
+    print("Vettore W di partenza: \n", w,)
+    print("")
+    print("Vettore W* calcolato tramite Normal Equations: \n", w_star)
+    print("")
+    loss = stochastich_gradient_descendent(w,target, matrix)
+    print("Vettore W calcolato dalla stochastich_gradient_descendent tramite MSE: \n", w)
+    print("")
+    print("Loss: ", loss)
 
 if __name__ == '__main__':
     main()
