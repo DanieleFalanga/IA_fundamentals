@@ -1,3 +1,3 @@
-# Fondamenti_IA
+# IA_fundamentals
 
-Cartella del corso di Fondamenti di Intelligenza Artificiale. Contiene gli esercizi richiesti per l'esame
+from scratch implementation of basic artificial intelligence exercises 
