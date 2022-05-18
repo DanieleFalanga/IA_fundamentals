@@ -28,8 +28,6 @@ class network():
     def mse_prime(self, y_true, y_pred):
         return 2 * (y_pred - y_true) / y_pred.size
 
-    
-
     def fit(self,x_train,y_train,epochs, learning_rate):
         output = []
         
@@ -37,7 +35,7 @@ class network():
         #restituendo l'output corrispondente
         
         for i in range(0,len(x_train)):
-            for epoch in epochs:    #faccio epochs iterazioni per la singola riga
+            for i in range(0,epochs):    #faccio epochs iterazioni per la singola riga
                 y_pred = self.predict(x_train[i])
                 loss = self.mse (y_train[i], y_pred)
                 if loss < 0.03: #se la loss è abbastanza bassa appendo al vettore di output

@@ -23,7 +23,7 @@ def main():
 
 
     output = net.fit(matrix, target, 1000, 0.01)
-
+    print(output)
     return 
 
 
