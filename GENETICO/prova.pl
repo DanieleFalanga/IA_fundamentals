@@ -1,12 +1,18 @@
-crossover(Q1, Q2, Cross1, Cross2):-            
-    random(1, 4, I2),                          % Scelgo numero random
-    length(Q2, L),                             % calcolo lunghezza di Q2 e salvo in L
-    I1 is L-I2,                                % Salvo la differenza tra 
-    reverse(Q1, Aux1),                         % salvo l'inversa di Q1 in Help1
-    sublist(I1, Aux1, F1),                     % prendo la 
-    reverse(F1, Final1),                       %
-    reverse(Q2, Aux2),                         %
-    sublist(I1, Aux2, F2),                     %
-    reverse(F2, Final2),                       %
-    subst(Final1, Final2, Q1, Cross1),         %
-	subst(Final2, Final1, Q2, Cross2).         %
+selection([], _, _, L1, L2, L1, L2).
+
+selection([P|Population], Fit1, Fit2, L1, L2, List1, List2):-
+    fitness(P, 0, Fit),
+    ((Fit < Fit1; Fit < Fit2) ->  (Fit1 > Fit2) ->  
+        (append([P], L1_aux), 
+        selection(Population, Fit, Fit2, L1_aux, L2, List1, List2))).
+
+selection([P|Population], Fit1, Fit2, L1, L2, List1, List2):-
+    fitness(P, 0, Fit),
+    ((Fit < Fit1; Fit < Fit2) ->  (Fit1 =< Fit2) ->  
+        append([P], L2_aux), 
+        selection(Population, Fit1, Fit, L1, L2_aux, List1, List2)).
+
+selection([P|Population], Fit1, Fit2, L1, L2, List1, List2):-
+    fitness(P, 0, Fit),
+    ((Fit >= Fit1, Fit >= Fit2) -> 
+    selection(Population, Fit1, Fit2, L1, L2, List1, List2) ).
